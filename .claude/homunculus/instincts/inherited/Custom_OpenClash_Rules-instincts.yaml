@@ -1,0 +1,454 @@
+# Instincts generated from https://github.com/sha7dowXX/Custom_OpenClash_Rules
+# Generated: 2026-07-10T08:48:31.720Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: Custom_OpenClash_Rules-commit-conventional
+trigger: "when writing a commit message"
+confidence: 0.85
+domain: git
+source: repo-analysis
+source_repo: https://github.com/sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_OpenClash_Rules Commit Conventional
+
+## Action
+
+Use conventional commit format with prefixes: chore, feat
+
+## Evidence
+
+- 100 commits analyzed
+- Detected conventional commit pattern
+- Examples: feat(rules): add direct domain kaipanhong.com by Telegram Bot (Telegram user: 🥝🥝🥝混个脸熟), chore(rules): auto generate Custom_Direct_Domain.yaml from Custom_Direct.list
+
+---
+id: Custom_OpenClash_Rules-commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_OpenClash_Rules Commit Length
+
+## Action
+
+Write moderate-length commit messages (~75 characters)
+
+## Evidence
+
+- Average commit message length: 75 chars
+- Based on 100 commits
+
+---
+id: Custom_OpenClash_Rules-naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_OpenClash_Rules Naming Files
+
+## Action
+
+Use camelCase naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: camelCase
+
+---
+id: Custom_OpenClash_Rules-import-relative
+trigger: "when importing modules"
+confidence: 0.75
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_OpenClash_Rules Import Relative
+
+## Action
+
+Use relative imports for project files
+
+## Evidence
+
+- Import analysis shows relative import pattern
+- Example: import { x } from '../lib/x'
+
+---
+id: Custom_OpenClash_Rules-export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_OpenClash_Rules Export Style
+
+## Action
+
+Prefer named exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: named
+
+---
+id: Custom_OpenClash_Rules-workflow-feature-development
+trigger: "when implementing a new feature"
+confidence: 0.85
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_OpenClash_Rules Workflow Feature Development
+
+## Action
+
+Follow the feature-development workflow:
+1. Add feature implementation
+2. Add tests for feature
+3. Update documentation
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~7x per month
+- Files: 
+
+---
+id: Custom_OpenClash_Rules-workflow-add-direct-domain-rule
+trigger: "when doing add direct domain rule"
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_OpenClash_Rules Workflow Add Direct Domain Rule
+
+## Action
+
+Follow the add-direct-domain-rule workflow:
+1. Edit rule/Custom_Direct.list to add the new domain.
+2. Auto-generate rule/Custom_Direct_Domain.yaml from rule/Custom_Direct.list.
+3. Auto-generate rule/Custom_Direct_Classical.yaml from rule/Custom_Direct.list.
+4. Auto-generate rule/Custom_Direct_Domain.mrs from rule/Custom_Direct_Domain.yaml.
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~8x per month
+- Files: rule/Custom_Direct.list, rule/Custom_Direct_Domain.yaml, rule/Custom_Direct_Classical.yaml
+
+---
+id: Custom_OpenClash_Rules-workflow-bump-openclash-overwrite-submodule
+trigger: "when doing bump openclash overwrite submodule"
+confidence: 0.6
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_OpenClash_Rules Workflow Bump Openclash Overwrite Submodule
+
+## Action
+
+Follow the bump-openclash-overwrite-submodule workflow:
+1. Update the submodule pointer for overwrite/OpenClash_Overwrite.
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~2x per month
+- Files: overwrite/OpenClash_Overwrite
+
+---
+id: Custom_OpenClash_Rules-workflow-auto-backup-wiki
+trigger: "when doing auto backup wiki"
+confidence: 0.55
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_OpenClash_Rules Workflow Auto Backup Wiki
+
+## Action
+
+Follow the auto-backup-wiki workflow:
+1. Copy or update a markdown file in the wiki/ directory.
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~1x per month
+- Files: wiki/*.md
+
+---
+id: custom_openclash_rules-instinct-file-naming
+trigger: "When creating or renaming a file in the codebase"
+confidence: 0.85
+domain: code-style
+source: repo-analysis
+source_repo: sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_openclash_rules Instinct File Naming
+
+## Action
+
+Use camelCase for file names
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions.files
+
+---
+id: custom_openclash_rules-instinct-function-naming
+trigger: "When defining a new function"
+confidence: 0.85
+domain: code-style
+source: repo-analysis
+source_repo: sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_openclash_rules Instinct Function Naming
+
+## Action
+
+Name the function using camelCase
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions.functions
+
+---
+id: custom_openclash_rules-instinct-class-naming
+trigger: "When defining a new class"
+confidence: 0.85
+domain: code-style
+source: repo-analysis
+source_repo: sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_openclash_rules Instinct Class Naming
+
+## Action
+
+Name the class using PascalCase
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions.classes
+
+---
+id: custom_openclash_rules-instinct-constant-naming
+trigger: "When defining a constant"
+confidence: 0.85
+domain: code-style
+source: repo-analysis
+source_repo: sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_openclash_rules Instinct Constant Naming
+
+## Action
+
+Name the constant using SCREAMING_SNAKE_CASE
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions.constants
+
+---
+id: custom_openclash_rules-instinct-import-style
+trigger: "When importing modules"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_openclash_rules Instinct Import Style
+
+## Action
+
+Use relative import paths
+
+## Evidence
+
+- Pattern in codeStyle.importStyle
+
+---
+id: custom_openclash_rules-instinct-export-style
+trigger: "When exporting modules or functions"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_openclash_rules Instinct Export Style
+
+## Action
+
+Use named exports
+
+## Evidence
+
+- Pattern in codeStyle.exportStyle
+
+---
+id: custom_openclash_rules-instinct-git-commit-format
+trigger: "When making a git commit"
+confidence: 0.9
+domain: git
+source: repo-analysis
+source_repo: sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_openclash_rules Instinct Git Commit Format
+
+## Action
+
+Format the commit message using the Conventional Commits standard, with prefixes like feat, chore, or fix
+
+## Evidence
+
+- Seen in commit: feat(rules): add direct domain kaipanhong.com by Telegram Bot (Telegram user: 🥝🥝🥝混个脸熟)
+- Pattern in commits.prefixes
+
+---
+id: custom_openclash_rules-instinct-commit-length
+trigger: "When writing a commit message"
+confidence: 0.7
+domain: git
+source: repo-analysis
+source_repo: sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_openclash_rules Instinct Commit Length
+
+## Action
+
+Keep the commit message around 75 characters on average
+
+## Evidence
+
+- Pattern in commits.averageLength
+
+---
+id: custom_openclash_rules-instinct-add-direct-domain-rule
+trigger: "When a new domain needs to be routed directly in OpenClash (e.g., via Telegram Bot)"
+confidence: 0.98
+domain: workflow
+source: repo-analysis
+source_repo: sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_openclash_rules Instinct Add Direct Domain Rule
+
+## Action
+
+Edit rule/Custom_Direct.list to add the domain, then auto-generate rule/Custom_Direct_Domain.yaml, rule/Custom_Direct_Classical.yaml, and rule/Custom_Direct_Domain.mrs
+
+## Evidence
+
+- Workflow: add-direct-domain-rule
+- Seen in commits: feat(rules): add direct domain ...
+- Pattern in files: rule/Custom_Direct.list, rule/Custom_Direct_Domain.yaml, rule/Custom_Direct_Classical.yaml, rule/Custom_Direct_Domain.mrs
+
+---
+id: custom_openclash_rules-instinct-bump-overwrite-submodule
+trigger: "When upstream changes are available for the OpenClash_Overwrite submodule"
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_openclash_rules Instinct Bump Overwrite Submodule
+
+## Action
+
+Update the submodule pointer for overwrite/OpenClash_Overwrite
+
+## Evidence
+
+- Workflow: bump-openclash-overwrite-submodule
+- Pattern in files: overwrite/OpenClash_Overwrite
+
+---
+id: custom_openclash_rules-instinct-auto-backup-wiki
+trigger: "When the wiki is updated or on a scheduled backup"
+confidence: 0.85
+domain: workflow
+source: repo-analysis
+source_repo: sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_openclash_rules Instinct Auto Backup Wiki
+
+## Action
+
+Copy or update a markdown file in the wiki/ directory
+
+## Evidence
+
+- Workflow: auto-backup-wiki
+- Pattern in files: wiki/*.md
+
+---
+id: custom_openclash_rules-instinct-feature-development-docs
+trigger: "When implementing a new feature"
+confidence: 0.8
+domain: workflow
+source: repo-analysis
+source_repo: sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_openclash_rules Instinct Feature Development Docs
+
+## Action
+
+After adding the feature and tests, update the documentation accordingly
+
+## Evidence
+
+- Workflow: feature-development
+- Commit sequence: Add feature implementation, Add tests for feature, Update documentation
+
+---
+id: custom_openclash_rules-instinct-test-pattern
+trigger: "When adding a new feature"
+confidence: 0.7
+domain: testing
+source: repo-analysis
+source_repo: sha7dowXX/Custom_OpenClash_Rules
+---
+
+# Custom_openclash_rules Instinct Test Pattern
+
+## Action
+
+Add tests for the new feature after implementation and before updating documentation
+
+## Evidence
+
+- Workflow: feature-development
+- Commit sequence: Add feature implementation, Add tests for feature, Update documentation
+
