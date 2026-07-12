@@ -3,32 +3,31 @@ name: Sync doc to Wiki
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
     paths:
       - 'doc/**'
 
 permissions:
   contents: write
 
-env:
-  TARGET_BRANCH: ${{ (github.event_name == 'workflow_run' && github.event.workflow_run.head_branch) || ((github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name) || (vars.WORK_BRANCH != '' && vars.WORK_BRANCH) || 'main' }}
-
 jobs:
   sync-to-wiki:
-    if: github.repository == 'Aethersailor/Custom_OpenClash_Rules' && (github.event_name != 'push' || github.ref_name == ((vars.WORK_BRANCH != '' && vars.WORK_BRANCH) || 'main'))
+    if: github.repository == 'Aethersailor/Custom_OpenClash_Rules'
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout working repository branch
-        uses: actions/checkout@v6
+      - name: Checkout main branch
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
-          ref: ${{ env.TARGET_BRANCH }}
+          ref: main
           fetch-depth: 0
 
       - name: Clone wiki repository with auth
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git clone https://x-access-token:${TOKEN}@github.com/${{ github.repository }}.wiki.git _wiki
+          git clone "https://x-access-token:${TOKEN}@github.com/${{ github.repository }}.wiki.git" _wiki
 
       - name: Prepare doc directory in wiki repository
         run: |

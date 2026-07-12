@@ -3,25 +3,28 @@ name: Sync doc assets to wiki/doc
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
     paths:
       - 'doc/**'
 
 permissions:
+  actions: write
   contents: write
 
-env:
-  TARGET_BRANCH: ${{ (github.event_name == 'workflow_run' && github.event.workflow_run.head_branch) || ((github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name) || (vars.WORK_BRANCH != '' && vars.WORK_BRANCH) || 'main' }}
+concurrency:
+  group: main-writers
 
 jobs:
   sync-doc-assets:
-    if: github.repository == 'Aethersailor/Custom_OpenClash_Rules' && (github.event_name != 'push' || github.ref_name == ((vars.WORK_BRANCH != '' && vars.WORK_BRANCH) || 'main'))
+    if: github.repository == 'Aethersailor/Custom_OpenClash_Rules'
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout working repository branch
-        uses: actions/checkout@v6
+      - name: Checkout main branch
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
-          ref: ${{ env.TARGET_BRANCH }}
+          ref: main
           fetch-depth: 0
 
       - name: Sync doc assets into wiki/doc
@@ -37,5 +40,9 @@ jobs:
 
           if ! git diff --cached --quiet; then
             git commit -m "chore(doc): sync doc assets to wiki"
-            git push
+            git pull --rebase origin main
+            git push origin HEAD:main
+            gh workflow run pages.yml --ref main
           fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

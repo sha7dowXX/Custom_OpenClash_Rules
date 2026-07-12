@@ -8,56 +8,45 @@ on:
 permissions:
   contents: write
 
-env:
-  TARGET_BRANCH: ${{ (github.event_name == 'workflow_run' && github.event.workflow_run.head_branch) || ((github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name) || (vars.WORK_BRANCH != '' && vars.WORK_BRANCH) || 'main' }}
-  TARGET_OVERWRITE_BRANCH: ${{ (vars.TARGET_OVERWRITE_BRANCH != '' && vars.TARGET_OVERWRITE_BRANCH) || 'main' }}
+concurrency:
+  group: main-writers
 
 jobs:
   sync-submodule:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
+      - name: Checkout main branch
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
-          ref: ${{ env.TARGET_BRANCH }}
+          ref: main
           fetch-depth: 0
           submodules: true
 
       - name: Update submodule
         run: |
-          git -C overwrite/OpenClash_Overwrite fetch origin main
-          git -C overwrite/OpenClash_Overwrite checkout -B main origin/main
+          submodule_paths=(
+            "overwrite/OpenClash_Overwrite"
+            "cfg/yaml/OpenClash_Overwrite"
+          )
 
-      - name: Sync issue templates to OpenClash_Overwrite
-        env:
-          TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
-        run: |
-          if [ -z "${TARGET_REPO_TOKEN}" ]; then
-            echo "TARGET_REPO_TOKEN is not configured, skip syncing issue templates."
-            exit 0
-          fi
-
-          mkdir -p overwrite/OpenClash_Overwrite/.github/ISSUE_TEMPLATE
-          rsync -av --delete .github/ISSUE_TEMPLATE/ overwrite/OpenClash_Overwrite/.github/ISSUE_TEMPLATE/
-
-          if [ -n "$(git -C overwrite/OpenClash_Overwrite status --porcelain)" ]; then
-            git -C overwrite/OpenClash_Overwrite config user.name "github-actions[bot]"
-            git -C overwrite/OpenClash_Overwrite config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git -C overwrite/OpenClash_Overwrite add .github/ISSUE_TEMPLATE
-            git -C overwrite/OpenClash_Overwrite commit -m "chore(github): sync issue templates from Custom_OpenClash_Rules"
-            git -C overwrite/OpenClash_Overwrite push "https://${TARGET_REPO_TOKEN}@github.com/Giveupmoon/OpenClash_Overwrite.git" "HEAD:${TARGET_OVERWRITE_BRANCH}"
-          else
-            echo "No issue template changes to sync."
-          fi
+          # .gitmodules 中两个入口均跟踪 main，同步后会指向同一最新提交
+          git submodule update --init --remote --checkout "${submodule_paths[@]}"
 
       - name: Commit and push if needed
         run: |
-          if [ -n "$(git status --porcelain)" ]; then
+          submodule_paths=(
+            "overwrite/OpenClash_Overwrite"
+            "cfg/yaml/OpenClash_Overwrite"
+          )
+
+          if [ -n "$(git status --porcelain -- "${submodule_paths[@]}")" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add overwrite/OpenClash_Overwrite
-            git commit -m "chore(overwrite): bump OpenClash_Overwrite submodule"
-            git push origin "HEAD:${TARGET_BRANCH}"
+            git add -- "${submodule_paths[@]}"
+            git commit -m "chore(overwrite): sync OpenClash_Overwrite submodules"
+            # 使用 pull --rebase 防止多人同时 push 导致的冲突
+            git pull --rebase origin main
+            git push origin HEAD:main
           else
             echo "No changes to commit."
           fi

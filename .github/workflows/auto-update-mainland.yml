@@ -2,6 +2,8 @@ name: Auto update mainland config
 
 on:
   push:
+    branches:
+      - main
     paths:
       - cfg/Custom_Clash.ini
   workflow_dispatch:
@@ -9,18 +11,17 @@ on:
 permissions:
   contents: write
 
-env:
-  TARGET_BRANCH: ${{ (github.event_name == 'workflow_run' && github.event.workflow_run.head_branch) || ((github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name) || (vars.WORK_BRANCH != '' && vars.WORK_BRANCH) || 'main' }}
+concurrency:
+  group: main-writers
 
 jobs:
   update-mainland:
-    if: github.event_name != 'push' || github.ref_name == ((vars.WORK_BRANCH != '' && vars.WORK_BRANCH) || 'main')
     runs-on: ubuntu-latest
     steps:
     - name: Check out the repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       with:
-        ref: ${{ env.TARGET_BRANCH }}
+        ref: main
         fetch-depth: 0
 
     - name: Generate Custom_Clash_Mainland.ini
@@ -37,10 +38,10 @@ jobs:
         # 判断是否有变更，只有在有变更时才提交
         if ! git diff --cached --quiet; then
           git commit -m "chore: update Custom_Clash_Mainland.ini based on Custom_Clash.ini"
-          if git ls-remote --exit-code --heads origin "$TARGET_BRANCH" >/dev/null 2>&1; then
-            git pull --rebase origin "$TARGET_BRANCH"
+          if git ls-remote --exit-code --heads origin main > /dev/null 2>&1; then
+            git pull --rebase origin main
           fi
-          git push origin "HEAD:$TARGET_BRANCH"
+          git push origin HEAD:main
         else
           echo "No changes to commit."
         fi
